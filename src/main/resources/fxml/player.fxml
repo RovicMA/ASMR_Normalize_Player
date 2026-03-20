@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.asmrplayer.ui.PlayerController"
+      styleClass="root-pane"
+      spacing="0">
+
+    <!-- ── Menu bar ─────────────────────────────────────────── -->
+    <MenuBar styleClass="menu-bar">
+        <Menu text="File">
+            <MenuItem text="Open…"  onAction="#onOpen"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Quit"   onAction="#onStop"/>
+        </Menu>
+    </MenuBar>
+
+    <!-- ── Video / artwork area ──────────────────────────────── -->
+    <StackPane fx:id="videoPane" styleClass="video-pane" VBox.vgrow="ALWAYS">
+        <!-- Subtitle overlay sits on top of the video surface -->
+        <Label fx:id="subtitleLabel" styleClass="subtitle-label"
+               wrapText="true" maxWidth="680"
+               StackPane.alignment="BOTTOM_CENTER"/>
+    </StackPane>
+
+    <!-- ── Info bar ──────────────────────────────────────────── -->
+    <HBox styleClass="info-bar" spacing="12" alignment="CENTER_LEFT">
+        <padding><Insets top="6" right="12" bottom="6" left="12"/></padding>
+        <Label fx:id="fileLabel" styleClass="file-label" text="No file loaded" HBox.hgrow="ALWAYS"/>
+        <Label fx:id="subtitleFileLabel" styleClass="subtitle-file-label" text=""/>
+    </HBox>
+
+    <!-- ── Seek bar ──────────────────────────────────────────── -->
+    <HBox styleClass="seek-row" spacing="10" alignment="CENTER">
+        <padding><Insets top="4" right="16" bottom="0" left="16"/></padding>
+        <Slider fx:id="seekSlider" styleClass="seek-slider" HBox.hgrow="ALWAYS"
+                min="0" max="100" value="0"/>
+        <Label fx:id="timeLabel" styleClass="time-label" text="00:00 / 00:00" minWidth="100"/>
+    </HBox>
+
+    <!-- ── Transport controls ────────────────────────────────── -->
+    <HBox styleClass="controls-row" spacing="10" alignment="CENTER">
+        <padding><Insets top="10" right="16" bottom="10" left="16"/></padding>
+        <Button fx:id="openBtn"    text="📂 Open"   onAction="#onOpen"        styleClass="ctrl-btn"/>
+        <Button                    text="⏮ –10s"    onAction="#onSkipBack"    styleClass="ctrl-btn"/>
+        <Button fx:id="playPauseBtn" text="▶"       onAction="#onPlayPause"   styleClass="ctrl-btn play-btn"/>
+        <Button fx:id="stopBtn"    text="⏹"         onAction="#onStop"        styleClass="ctrl-btn"/>
+        <Button                    text="⏭ +10s"    onAction="#onSkipForward" styleClass="ctrl-btn"/>
+    </HBox>
+
+    <!-- ── Volume, gain, normalise ───────────────────────────── -->
+    <HBox styleClass="mixer-row" spacing="16" alignment="CENTER">
+        <padding><Insets top="0" right="24" bottom="14" left="24"/></padding>
+
+        <Label text="Vol" styleClass="mixer-label"/>
+        <Slider fx:id="volumeSlider" min="0" max="200" value="100"
+                showTickLabels="false" styleClass="mixer-slider" prefWidth="120"/>
+
+        <Label text="Gain" styleClass="mixer-label"/>
+        <Slider fx:id="gainSlider" min="0" max="2" value="1"
+                showTickLabels="false" styleClass="mixer-slider" prefWidth="120"/>
+
+        <CheckBox fx:id="normalizeCheck" text="Normalize"
+                  onAction="#onNormalizeToggle" styleClass="normalize-check" selected="true"/>
+    </HBox>
+
+</VBox>
